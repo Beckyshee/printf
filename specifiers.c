@@ -1,12 +1,10 @@
 #include "main.h"
-
 /**
- * get_specifier - finds the format func
- * @s: the format string
- *
- * Return: the number of bytes printed
+ * get_specifier - checks for the specifier
+ * @s: string
+ * Return: the bytes to be printed
  */
-int (*get_specifier(char *s))(va_list ap, params_t *params)
+int (*get_specifier(char *s))(va_list aps, params_t *params)
 {
 	specifier_t specifiers[] = {
 		{"c", print_char},
@@ -39,28 +37,26 @@ int (*get_specifier(char *s))(va_list ap, params_t *params)
 }
 
 /**
- * get_print_func - finds the format func
- * @s: the format string
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: the number of bytes printed
+ * get_print_func - gets and prints the function
+ * @s: string
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: bytes to be printed
  */
-int get_print_func(char *s, va_list ap, params_t *params)
+int get_print_func(char *s, va_list aps, params_t *params)
 {
 	int (*f)(va_list, params_t *) = get_specifier(s);
 
 	if (f)
-		return (f(ap, params));
+		return (f(aps, params));
 	return (0);
 }
 
 /**
- * get_flag - finds the flag func
- * @s: the format string
- * @params: the parameters struct
- *
- * Return: if flag was valid
+ * get_flag - gets the flags
+ * @s: string
+ * @params: parameters
+ * Return: flag
  */
 int get_flag(char *s, params_t *params)
 {
@@ -88,11 +84,10 @@ int get_flag(char *s, params_t *params)
 }
 
 /**
- * get_modifier - finds the modifier func
- * @s: the format string
- * @params: the parameters struct
- *
- * Return: if modifier was valid
+ * get_modifier - gets the function modifier
+ * @s: string
+ * @params: parameters
+ * Return: char
  */
 int get_modifier(char *s, params_t *params)
 {
@@ -111,21 +106,22 @@ int get_modifier(char *s, params_t *params)
 }
 
 /**
- * get_width - gets the width from the format string
- * @s: the format string
- * @params: the parameters struct
- * @ap: the argument pointer
- *
+ * get_width - gets the width
+ * @s: string
+ * @params: parameters
+ * @aps: pinter arguments
  * Return: new pointer
  */
-char *get_width(char *s, params_t *params, va_list ap)
-/* should this function use char **s and modify the pointer? */
+
+char *get_width(char *s, params_t *params, va_list aps)
+
+/* just incase the function uses char **s */
 {
 	int d = 0;
 
 	if (*s == '*')
 	{
-		d = va_arg(ap, int);
+		d = va_arg(aps, int);
 		s++;
 	}
 	else

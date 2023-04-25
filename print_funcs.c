@@ -1,16 +1,14 @@
 #include "main.h"
-
 /**
  * print_char - prints character
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: number chars printed
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: number characters to be printed
  */
-int print_char(va_list ap, params_t *params)
+int print_char(va_list aps, params_t *params)
 {
 	char pad_char = ' ';
-	unsigned int pad = 1, sum = 0, ch = va_arg(ap, int);
+	unsigned int pad = 1, sum = 0, ch = va_arg(aps, int);
 
 	if (params->minus_flag)
 		sum += _putchar(ch);
@@ -23,34 +21,32 @@ int print_char(va_list ap, params_t *params)
 
 /**
  * print_int - prints integer
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: number chars printed
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: number of characters to be printed
  */
-int print_int(va_list ap, params_t *params)
+int print_int(va_list aps, params_t *params)
 {
 	long l;
 
 	if (params->l_modifier)
-		l = va_arg(ap, long);
+		l = va_arg(aps, long);
 	else if (params->h_modifier)
-		l = (short int)va_arg(ap, int);
+		l = (short int)va_arg(aps, int);
 	else
-		l = (int)va_arg(ap, int);
-	return (print_number(convert(l, 10, 0, params), params));
+		l = (int)va_arg(aps, int);
+	return (print_nums(convert(l, 10, 0, params), params));
 }
 
 /**
  * print_string - prints string
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: number chars printed
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: chars printed
  */
-int print_string(va_list ap, params_t *params)
+int print_string(va_list aps, params_t *params)
 {
-	char *str = va_arg(ap, char *), pad_char = ' ';
+	char *str = va_arg(aps, char *), pad_char = ' ';
 	unsigned int pad = 0, sum = 0, i = 0, j;
 
 	(void)params;
@@ -84,29 +80,27 @@ int print_string(va_list ap, params_t *params)
 }
 
 /**
- * print_percent - prints string
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: number chars printed
+ * print_percent - prints stringto percentage
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: chars
  */
-int print_percent(va_list ap, params_t *params)
+int print_percent(va_list aps, params_t *params)
 {
-	(void)ap;
+	(void)aps;
 	(void)params;
 	return (_putchar('%'));
 }
 
 /**
  * print_S - custom format specifier
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: number chars printed
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: number
  */
-int print_S(va_list ap, params_t *params)
+int print_S(va_list aps, params_t *params)
 {
-	char *str = va_arg(ap, char *);
+	char *str = va_arg(aps, char *);
 	char *hex;
 	int sum = 0;
 

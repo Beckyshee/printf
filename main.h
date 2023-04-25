@@ -77,10 +77,10 @@ int _putchar(int c);
 /* nums.c module */
 char *convert(long int num, int base, int flags, params_t *params);
 int print_unsigned(va_list aps, params_t *params);
-int print_addresses(va_list aps, params_t *params);
+int print_address(va_list aps, params_t *params);
 
 /* specifiers.c module */
-int (*check_specifier(char *s))(va_list aps, params_t *params);
+int (*get_specifier(char *s))(va_list aps, params_t *params);
 int get_modifier(char *s, params_t *params);
 char *get_width(char *s, params_t *params, va_list aps);
 int get_print_func(char *s, va_list aps, params_t *params);
@@ -112,5 +112,4 @@ int print_rot13(va_list aps, params_t *params);
 
 /* _prinf.c module */
 int _printf(const char *format, ...);
-
 #endif /*PRINTF_MAIN_H*/

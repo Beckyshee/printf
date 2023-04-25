@@ -53,18 +53,18 @@ int print_unsigned(va_list aps, params_t *params)
 	else
 		l = (unsigned int)va_arg(aps, unsigned int);
 	params->unsign = 1;
-	return (print_number(convert(l, 10, CONVERT_UNSIGNED, params), params));
+	return (print_nums(convert(l, 10, CONVERT_UNSIGNED, params), params));
 }
 
 
 
 /**
- * print_addresses - prints the addresses
+ * print_address - prints the addresses
  * @aps: argument pointer
  * @params: struct parameters
  * Return: bytes to be printed
  */
-int print_addresses(va_list aps, params_t *params)
+int print_address(va_list aps, params_t *params)
 {
 	unsigned long int n = va_arg(aps, unsigned long int);
 	char *str;
@@ -75,5 +75,5 @@ int print_addresses(va_list aps, params_t *params)
 	str = convert(n, 16, CONVERT_UNSIGNED | CONVERT_LOWERCASE, params);
 	*--str = 'x';
 	*--str = '0';
-	return (print_number(str, params));
+	return (print_nums(str, params));
 }
