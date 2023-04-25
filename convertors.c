@@ -62,6 +62,7 @@ int print_HEX(va_list aps, params_t *params)
  * print_binary - prints unsigned binary
  * @aps: argument pointer
  * @params: the parameters
+ *
  * Return: bytes to be printed
  */
 int print_binary(va_list aps, params_t *params)
