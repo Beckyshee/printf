@@ -3,6 +3,7 @@
  * init_params - resets the buffer
  * @params: parameters struct
  * @aps:  argument pointer
+ *
  * Return: void
  */
 void init_params(params_t *params, va_list aps)
