@@ -1,54 +1,49 @@
 #include "main.h"
 
 /**
- * _printf - prints the input into standard output
- * @format: a string.
+ * _printf - prints and input into the standard output
+ * @format: the format string
  *
- *
- * Return: number of characters printed.
+ * Return: number of bytes printed
  */
 int _printf(const char *format, ...)
 {
-	unsigned int i = 0, len = 0, i_buff = 0;
-	va_list args;
-	int (*function)(va_list, char *, unsigned int);
-	char *buffer;
+	int sum = 0;
+	va_list ap;
+	char *p, *start;
+	params_t params = PARAMS_INIT;
 
-	va_start(args, format), buffer = malloc(sizeof(char) * 1024);
-	/*handling null incase of one*/
-	if (!format || !buffer || (format[i] == '%' && !format[i + 1]))
+	va_start(ap, format);
+
+	if (!format || (format[0] == '%' && !format[1]))/* checking NULL character*/
 		return (-1);
-	if (!format[i])
-		return (0);
-	for (i = 0; format && format[i]; i++)
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = (char *)format; *p; p++)
 	{
-	/*checking for the percent specifier*/
-		if (format[i] == '%')
+		init_params(&params, ap);
+		if (*p != '%')/*checking for the % specifier*/
 		{
-			if (format[i + 1] == '\0')
-			{	print_buff(buffer, i_buff), free(buffer), va_end(args);
-				return (-1);
-			}
-			else
-			{	function = get_print_func(format, i + 1);
-				if (function == NULL)
-				{
-					if (format[i + 1] == ' ' && !format[i + 2])
-						return (-1);
-					handle_buff(buffer, format[i], i_buff), len++, i--;
-				}
-				else
-				{
-					len += function(args, buffer, i_buff);
-					i += env_print_func(format, i + 1);
-				}
-			} i++;
+			sum += _putchar(*p);
+			continue;
 		}
+		start = p;
+		p++;
+		while (get_flag(p, &params)) /* while char at p is flag char */
+		{
+			p++; /* next char */
+		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+				params.l_modifier || params.h_modifier ? p - 1 : 0);
 		else
-			handl_buff(buffer, format[i], i_buff), len++;
-		for (i_buff = len; i_buff > 1024; i_buff -= 1024)
-			;
+			sum += get_print_func(p, ap, &params);
 	}
-	print_buff(buffer, i_buff), free(buffer), va_end(args);
-	return (len);
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
 }
