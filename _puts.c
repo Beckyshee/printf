@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * _puts - prints a string with newline
- * @str: the string to print
- *
+ * _puts - prints a string of characters
+ * @str: string
  * Return:( str-a)
  */
 int _puts(char *str)
 {
-	char *a = str;/*declaration of variables*/
+	/*declararing the variables*/
+	char *a = str;
 
 	while (*str)
 		_putchar(*str++);
@@ -16,11 +16,9 @@ int _puts(char *str)
 }
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and error is set appropriately.
+ * _putchar - writes chars to stdout
+ * @c: the character
+ * Return: On success 1 On error, -1 if null
  */
 int _putchar(int c)
 {

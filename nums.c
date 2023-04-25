@@ -1,12 +1,11 @@
 #include "main.h"
 
 /**
- * convert - converter function, a clone of itoa
+ * convert - converts functions
  * @num: number
  * @base: base
- * @flags: argument flags
- * @params: paramater struct
- *
+ * @flags: flags args
+ * @params: paramaters
  * Return: string
  */
 char *convert(long int num, int base, int flags, params_t *params)
@@ -38,22 +37,21 @@ char *convert(long int num, int base, int flags, params_t *params)
 }
 
 /**
- * print_unsigned - prints unsigned integer numbers
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: bytes printed
+ * print_unsigned - prints unsigned ints
+ * @aps: argument pointer
+ * @params: the parameters
+ * Return: bytes to be printed
  */
-int print_unsigned(va_list ap, params_t *params)
+int print_unsigned(va_list aps, params_t *params)
 {
 	unsigned long l;
 
 	if (params->l_modifier)
-		l = (unsigned long)va_arg(ap, unsigned long);
+		l = (unsigned long)va_arg(aps, unsigned long);
 	else if (params->h_modifier)
-		l = (unsigned short int)va_arg(ap, unsigned int);
+		l = (unsigned short int)va_arg(aps, unsigned int);
 	else
-		l = (unsigned int)va_arg(ap, unsigned int);
+		l = (unsigned int)va_arg(aps, unsigned int);
 	params->unsign = 1;
 	return (print_number(convert(l, 10, CONVERT_UNSIGNED, params), params));
 }
@@ -61,15 +59,14 @@ int print_unsigned(va_list ap, params_t *params)
 
 
 /**
- * print_address - prints address
- * @ap: argument pointer
- * @params: the parameters struct
- *
- * Return: bytes printed
+ * print_addresses - prints the addresses
+ * @aps: argument pointer
+ * @params: struct parameters
+ * Return: bytes to be printed
  */
-int print_address(va_list ap, params_t *params)
+int print_addresses(va_list aps, params_t *params)
 {
-	unsigned long int n = va_arg(ap, unsigned long int);
+	unsigned long int n = va_arg(aps, unsigned long int);
 	char *str;
 
 	if (!n)

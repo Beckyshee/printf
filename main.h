@@ -1,5 +1,5 @@
-#ifndef _PRINTF_H_
-#define _PRINTF_H_
+#ifndef PRINTF_MAIN_H
+#define PRINTF_MAIN_H
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -22,19 +22,16 @@
 /**
  * struct parameters - parameters struct
  *
- * @unsign: flag if unsigned value
- *
- * @plus_flag: on if plus_flag specified
- * @space_flag: on if hashtag_flag specified
- * @hashtag_flag: on if _flag specified
- * @zero_flag: on if _flag specified
- * @minus_flag: on if _flag specified
- *
- * @width: field width specified
- * @precision: field precision specified
- *
- * @h_modifier: on if h_modifier is specified
- * @l_modifier: on if l_modifier is specified
+ * @unsign: flag if unsigned
+ * @plus_flag: on if plus_flag
+ * @space_flag: if hashtag_flag
+ * @hashtag_flag: if _flag specified
+ * @zero_flag: flag specified
+ * @minus_flag: on if specified
+ * @width: field width
+ * @precision: field precision
+ * @h_modifier: on if its specified
+ * @l_modifier: on if its specified
  *
  */
 
@@ -56,10 +53,9 @@ typedef struct parameters
 } params_t;
 
 /**
- * struct specifier - Struct token
- *
- * @specifier: format token
- * @f: The function associated
+ * struct specifier - Structure struct
+ * @specifier: format
+ * @f: function
  */
 typedef struct specifier
 {
@@ -67,54 +63,54 @@ typedef struct specifier
 	int (*f)(va_list, params_t *);
 } specifier_t;
 
+/* print_funcs.c module */
+int print_char(va_list aps, params_t *params);
+int print_percent(va_list aps, params_t *params);
+int print_S(va_list aps, params_t *params);
+int print_int(va_list aps, params_t *params);
+int print_string(va_list aps, params_t *params);
+
 /* _put.c module */
 int _puts(char *str);
 int _putchar(int c);
 
-/* print_functions.c module */
-int print_char(va_list ap, params_t *params);
-int print_int(va_list ap, params_t *params);
-int print_string(va_list ap, params_t *params);
-int print_percent(va_list ap, params_t *params);
-int print_S(va_list ap, params_t *params);
-
-/* number.c module */
+/* nums.c module */
 char *convert(long int num, int base, int flags, params_t *params);
-int print_unsigned(va_list ap, params_t *params);
-int print_address(va_list ap, params_t *params);
+int print_unsigned(va_list aps, params_t *params);
+int print_addresses(va_list aps, params_t *params);
 
-/* specifier.c module */
-int (*get_specifier(char *s))(va_list ap, params_t *params);
-int get_print_func(char *s, va_list ap, params_t *params);
-int get_flag(char *s, params_t *params);
+/* specifiers.c module */
+int (*check_specifier(char *s))(va_list aps, params_t *params);
 int get_modifier(char *s, params_t *params);
-char *get_width(char *s, params_t *params, va_list ap);
+char *get_width(char *s, params_t *params, va_list aps);
+int get_print_func(char *s, va_list aps, params_t *params);
+int get_flag(char *s, params_t *params);
 
-/* convert_number.c module */
-int print_hex(va_list ap, params_t *params);
-int print_HEX(va_list ap, params_t *params);
-int print_binary(va_list ap, params_t *params);
-int print_octal(va_list ap, params_t *params);
+/* conertors.c module */
+int print_hex(va_list aps, params_t *params);
+int print_HEX(va_list aps, params_t *params);
+int print_binary(va_list aps, params_t *params);
+int print_octal(va_list aps, params_t *params);
 
-/* simple_printers.c module */
-int print_from_to(char *start, char *stop, char *except);
-int print_rev(va_list ap, params_t *params);
-int print_rot13(va_list ap, params_t *params);
-
-/* print_number.c module */
+/* print_nums.c module */
 int _isdigit(int c);
 int _strlen(char *s);
-int print_number(char *str, params_t *params);
-int print_number_right_shift(char *str, params_t *params);
-int print_number_left_shift(char *str, params_t *params);
+int print_nums(char *str, params_t *params);
+int print_right_shift(char *str, params_t *params);
+int print_left_shift(char *str, params_t *params);
 
-/* params.c module */
-void init_params(params_t *params, va_list ap);
+/* parameters.c module */
+void init_params(params_t *params, va_list aps);
 
-/* string_fields.c modoule */
-char *get_precision(char *p, params_t *params, va_list ap);
+/* get_prescion.c modoule */
+char *check_precision(char *p, params_t *params, va_list aps);
+
+/* rot_reverse.c module */
+int print_from_to(char *start, char *stop, char *except);
+int print_rev(va_list aps, params_t *params);
+int print_rot13(va_list aps, params_t *params);
 
 /* _prinf.c module */
 int _printf(const char *format, ...);
 
-#endif /*_MAIN_H_*/
+#endif /*PRINTF_MAIN_H*/
